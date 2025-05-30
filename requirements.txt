@@ -3,4 +3,4 @@ flask-cors
 pdfplumber
 python-docx
 python-dotenv
-
+docx2txt
