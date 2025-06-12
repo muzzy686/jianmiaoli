@@ -1,15 +1,16 @@
 import os
-import pdfplumber
-from docx import Document
+import docx2txt
+import PyPDF2
 
-def extract_text_from_file(filepath):
-    ext = os.path.splitext(filepath)[1].lower()
-    if ext == '.pdf':
-        return extract_from_pdf(filepath)
-    elif ext == '.docx':
-        return extract_from_docx(filepath)
+def extract_text_from_file(file_path):
+    if file_path.endswith(".docx"):
+        return docx2txt.process(file_path)
+    elif file_path.endswith(".pdf"):
+        with open(file_path, "rb") as f:
+            reader = PyPDF2.PdfReader(f)
+            return "\n".join([page.extract_text() for page in reader.pages])
     else:
-        raise ValueError("Unsupported file format")
+        return "Unsupported file type"
 
 def extract_from_pdf(filepath):
     text = ''
