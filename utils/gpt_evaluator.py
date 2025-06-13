@@ -21,21 +21,20 @@ def evaluate_resume(resume_text):
         url = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
         if not api_key:
             return 60, "⚠️ 未检测到 API Key，无法连接通义千问接口"
-            prompt = f"""{lang_instruction}你是一名资深HR专家。请根据以下简历内容，先用一段简短文字先总体评价下简历，然后从内容完整性、逻辑清晰性、突出优势三个维度进行评分（0-100），最后给出具体的优化建议：简历内容如下：{resume_text}"""
-            headers = {
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json"
+        prompt = f"""{lang_instruction}你是一名资深HR专家。请根据以下简历内容，先用一段简短文字先总体评价下简历，然后从内容完整性、逻辑清晰性、突出优势三个维度进行评分（0-100），最后给出具体的优化建议：简历内容如下：{resume_text}"""
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+             "Content-Type": "application/json"
+        }
+        data = {
+            "model": "qwen-turbo",
+            "input": {
+            "prompt": prompt
+            },
+            "parameters": {
+            "result_format": "message"
             }
-            data = {
-                "model": "qwen-turbo",
-                "input": {
-                "prompt": prompt
-                },
-                "parameters": {
-                "result_format": "message"
-                }
-            }
-
+        }
         response = requests.post(url, json=data, headers=headers)
         result = response.json()
 
