@@ -54,7 +54,7 @@ def upload_resume():
             "feedback": "AI 分析失败",
             "resume_text": ""
         }), 500
-    score, feedback = evaluate_resume(text)
+    # score, feedback = evaluate_resume(text)
     print(f"✅ 分析完成：score={score}")
     return jsonify({
     'score': score,
